@@ -16,7 +16,7 @@ Setup
 ## Usage
 
 ```bash
-Authorize the APP using - 'https://www.dropbox.com/oauth2/authorize?client_id=fgu9ffprmujvz58&response_type=code&token_access_type=offline&redirect_uri=http://localhost:3000/api/dropbox/oauth/callback'
+Authorize the APP using - 'https://www.dropbox.com/oauth2/authorize?client_id=fgu9ffprmujvz58&response_type=code&token_access_type=offline&redirect_uri=https://dropboxapi-pearlthoughts.onrender.com/api/dropbox/oauth/callback'
 ```
 
 ## 📎 Endpoint Details
@@ -30,15 +30,16 @@ Authorize the APP using - 'https://www.dropbox.com/oauth2/authorize?client_id=fg
   "userIdentity": "user@example.com",
   "destinationFolder": "downloads/folder-name"
 }
-Field	Type	Required	Description
-dropboxLink	string	✅	Shared Dropbox file or folder link
-userIdentity	string	✅	Email/username used to fetch pre-authorized refresh token
-destinationFolder	string	❌	Optional relative path on local drive for storing files
+```
+#### Request Payload
+| **Field**           | **Type** | **Required** | **Description**                                           |
+| ------------------- | -------- | ------------ | --------------------------------------------------------- |
+| `dropboxLink`       | string   | ✅ Yes        | Shared Dropbox file or folder link                        |
+| `userIdentity`      | string   | ✅ Yes        | Email/username used to fetch pre-authorized refresh token |
+| `destinationFolder` | string   | ❌ No         | Optional relative path on local drive for storing files   |
 
 ✅ Success Response (200 OK)
-json
-Copy
-Edit
+```json
 {
   "status": "success",
   "message": "Files downloaded successfully.",
@@ -51,30 +52,31 @@ Edit
   ],
   "destinationFolder": "/path/to/folder"
 }
-❌ Error Responses
-Status	Message
-400	"Invalid request payload. 'dropboxLink' is required."
-401	"Dropbox access not authorized for this user."
-403	"Access denied to the Dropbox link. Insufficient permissions."
-404	"Dropbox link not found or invalid."
-500	"An unexpected error occurred during file download. Please try again."
+```
+#### ❌ Error Responses
+| **Status** | **Message**                                                              |
+| ---------- | ------------------------------------------------------------------------ |
+| 400        | `"Invalid request payload. 'dropboxLink' is required."`                  |
+| 401        | `"Dropbox access not authorized for this user."`                         |
+| 403        | `"Access denied to the Dropbox link. Insufficient permissions."`         |
+| 404        | `"Dropbox link not found or invalid."`                                   |
+| 500        | `"An unexpected error occurred during file download. Please try again."` |
 
-🔐 Security
+#### 🔐 Security
 Refresh tokens are securely stored.
 
 Input validation & path sanitization applied.
 
 HTTPS is mandatory for all API communications.
 
-Dropbox client secret is never exposed.
+The Dropbox client secret is never exposed.
 
-🧪 Testing
+#### 🧪 Testing
 Run tests using:
 
-bash
-Copy
-Edit
-yarn test:e2e
+```bash
+npm run test:e2e
+```
 Test coverage includes:
 
 Valid downloads
@@ -87,9 +89,9 @@ Permission errors
 
 Dropbox link issues
 
-Server failures
+Server failure
 
-⚙️ Future Enhancements
+#### ⚙️ Future Enhancements
 Background job queue for large files.
 
 Progress tracking.
@@ -98,7 +100,7 @@ File overwrite strategies.
 
 Webhook notifications for Dropbox changes.
 
-📁 Tech Stack
+#### 📁 Tech Stack
 Framework: NestJS
 
 Language: TypeScript
